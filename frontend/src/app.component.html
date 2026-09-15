@@ -1,0 +1,43 @@
+<main>
+  <h1>Job Application Tracker</h1>
+  <p class="subtitle">Keep job applications and notes in one place.</p>
+
+  <section class="stats">
+    <div><strong>{{ applications.length }}</strong><span>Total</span></div>
+    <div><strong>{{ count('Applied') }}</strong><span>Applied</span></div>
+    <div><strong>{{ count('Interview') }}</strong><span>Interview</span></div>
+    <div><strong>{{ count('Offer') }}</strong><span>Offer</span></div>
+  </section>
+
+  <section class="panel">
+    <h2>Add Application</h2>
+    <div class="grid">
+      <input [(ngModel)]="form.company" placeholder="Company">
+      <input [(ngModel)]="form.jobTitle" placeholder="Job title">
+      <input [(ngModel)]="form.location" placeholder="Location">
+      <select [(ngModel)]="form.status">
+        <option>Applied</option><option>Interview</option>
+        <option>Offer</option><option>Rejected</option>
+      </select>
+    </div>
+    <textarea [(ngModel)]="form.jobDescription" placeholder="Job description"></textarea>
+    <textarea [(ngModel)]="form.notes" placeholder="Notes"></textarea>
+    <button (click)="add()">Add Application</button>
+  </section>
+
+  <section class="panel">
+    <h2>Applications</h2>
+    <table>
+      <thead><tr><th>Company</th><th>Role</th><th>Location</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+        <tr *ngFor="let item of applications">
+          <td>{{ item.company }}</td>
+          <td>{{ item.jobTitle }}</td>
+          <td>{{ item.location }}</td>
+          <td>{{ item.status }}</td>
+          <td><button class="delete" (click)="remove(item.id)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>

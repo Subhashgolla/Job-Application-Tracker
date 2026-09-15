@@ -1,0 +1,31 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "${SA_PASSWORD:-JobTracker123!}"
+    ports:
+      - "1433:1433"
+
+  skill-service:
+    build: ./skill-service
+    ports:
+      - "8000:8000"
+
+  api:
+    build: ./backend/JobTracker.Api
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=db;Database=JobTrackerDb;User Id=sa;Password=${SA_PASSWORD:-JobTracker123!};TrustServerCertificate=True"
+      SkillService__BaseUrl: "http://skill-service:8000"
+    depends_on:
+      - db
+      - skill-service
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - api
+    ports:
+      - "4200:80"
