@@ -1,66 +1,114 @@
 # Job Application Tracker
 
-This is a full-stack project for keeping track of job applications in one place.
+A web application I built to keep track of job applications and their current status.
 
-Users can add a company, job title, location, status, job description, and notes. The dashboard shows application totals by status. I also added a small Python service that compares skills from a job description with a list of candidate skills.
+The application allows users to save job details such as company name, job title, location, application status, job description, and notes. I also added a Python service to compare skills from a job description with a candidate's skills.
 
 ## Features
 
-- Add and view job applications
-- Update application status
+- Add new job applications
+- View saved applications
+- Track application status
 - Delete applications
-- Track Applied, Interview, Offer, and Rejected applications
-- Store application data in SQL Server
-- Compare job description skills with candidate skills
-- REST API with Swagger
-- Angular dashboard
+- Store application details in SQL Server
+- View total applications by status
+- Compare skills with a job description
 
-## Technologies
+Application statuses include:
 
+- Applied
+- Interview
+- Offer
+- Rejected
+
+## Technologies Used
+
+**Frontend**
+- Angular
+- TypeScript
+- HTML
+- CSS
+
+**Backend**
 - C#
 - .NET 8
 - ASP.NET Core Web API
 - Entity Framework Core
-- Angular
-- TypeScript
+
+**Database**
 - SQL Server
+
+**Python Service**
 - Python
 - FastAPI
+
+**Other Tools**
 - Docker
 - Swagger
+- Git
+- GitHub Actions
 
 ## Project Structure
 
 ```text
-backend/       ASP.NET Core API
-frontend/      Angular application
-skill-service/ Python skill matching service
+Job-Application-Tracker/
+│
+├── backend/
+│   └── JobTracker.Api/
+│
+├── frontend/
+│
+├── skill-service/
+│
+├── .github/
+│   └── workflows/
+│
+├── docker-compose.yml
+├── .env.example
+└── README.md
 ```
 
-## Run with Docker
+## Running the Project
 
-Make sure Docker Desktop is running.
+Docker Desktop is required to run all the services together.
+
+Create a `.env` file from `.env.example` and then run:
 
 ```bash
 docker compose up --build
 ```
 
-Then open:
+Once the containers are running:
 
-- Frontend: http://localhost:4200
-- API Swagger: http://localhost:8080/swagger
-- Skill service docs: http://localhost:8000/docs
+```text
+Frontend
+http://localhost:4200
+
+Swagger
+http://localhost:8080/swagger
+
+Skill Service
+http://localhost:8000/docs
+```
 
 ## Skill Matching
 
-The Python service uses a simple skill dictionary to find technologies mentioned in a job description and compares them with candidate skills.
+The Python service checks the technologies mentioned in a job description and compares them with a list of candidate skills.
 
-This part is intentionally kept simple. It can later be replaced with an NLP or machine learning model.
+It returns:
+
+- Required skills
+- Matching skills
+- Missing skills
+- Match percentage
+
+The current version uses simple text-based skill matching. I plan to improve this later using NLP.
 
 ## Future Improvements
 
-- Add user login
+- Add login and user accounts
 - Add resume upload
 - Add application reminders
-- Improve skill matching with NLP
+- Improve skill matching
+- Add application search and filters
 - Deploy the application to AWS
